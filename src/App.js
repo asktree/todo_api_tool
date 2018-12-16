@@ -4,25 +4,29 @@ var X2JS = require('x2js');
 var x2js = new X2JS();
 
 var opmlstr = 
-`<?xml version="1.0" encoding="utf-8"?>
+`<?xml version="1.0"?>
 <opml version="2.0">
   <head>
-    <title></title>
-    <flavor>dynalist</flavor>
-    <source>https://dynalist.io</source>
-    <ownerName>Agrippa Kellum</ownerName>
-    <ownerEmail>agrippakellum@gmail.com</ownerEmail>
+    <ownerEmail>
+      agrippakellum@gmail.com
+    </ownerEmail>
   </head>
   <body>
-    <outline text="test">
-      <outline text="baking | reward: 400">
-        <outline text="get flour | cost: 100"/>
-        <outline text="get water | cost: 30"/>
-      </outline>
-      <outline text="website | reward: 300">
-        <outline text="get internet | cost: 100"/>
-        <outline text="get house | cost: 100"/>
-      </outline>
+    <outline text="Complete ML Project | reward: 400">
+      <outline text="Read chapter 9 | cost: 30" />
+      <outline text="Write program | cost: 200" />
+      <outline text="Write report | cost: 100" />
+    </outline>
+    <outline text="Prepare for winter break | reward: 1000">
+      <outline text="Buy tickets | cost: 20" />
+      <outline text="Pack clothes | cost: 20" />
+      <outline text="Pack toiletries | cost: 10" />
+      <outline text="Make accommodations | cost: 50" />
+    </outline>
+    <outline text="Complete bio essay | reward: 600">
+      <outline text="Get sources | cost: 200" />
+      <outline text="Write outline | cost: 100" />
+      <outline text="Fill in details | cost: 200" />
     </outline>
   </body>
 </opml>`;
@@ -51,7 +55,7 @@ const parse_reward = str => {
 
 const convert2api = dat => {
   let newDat = JSON.parse(JSON.stringify(dat));
-  var goals = newDat["opml"]["body"]["outline"]["outline"];
+  var goals = newDat["opml"]["body"]["outline"];
   console.log(goals);
   for (var goal of goals.entries()) {
     console.log(goal)
@@ -78,6 +82,10 @@ class App extends Component {
     return (
       <div className="App">
         <ReactJson src={convert2api(honk)} />
+        <br/>
+        <textarea> 
+          {`<?xml version="1.0"?> `+ x2js.js2xml(convert2api(honk))}
+        </textarea>
       </div>
     );
   }
